@@ -21,7 +21,7 @@
 
 | 🎯 Game | 🧠 Tutor | 🛡️ Safety | 🧪 Evaluation |
 |:--:|:--:|:--:|:--:|
-| 3 difficulty modes | 5 curated bug references | Validation + safe fallback | 11 unit tests |
+| 3 difficulty modes | 5 curated bug references | Validation + safe fallback | 12 unit tests |
 | Higher/lower hints | Explain cause → fix → test | No automatic code execution | 8 evaluation scenarios |
 | Scoring + reset | Optional OpenAI explanations | Human verification | GitHub Actions CI |
 
@@ -134,7 +134,7 @@ python -m streamlit run app.py
 
 For Windows PowerShell, activate with `\.venv\Scripts\Activate.ps1`. Streamlit will display a local URL (usually `http://localhost:8501`).
 
-**Try this:** Select a difficulty → make a valid guess → try an invalid guess → restart → enter a bug description in **AI Debugging Tutor** → review the retrieved reference and proposed verification step.
+**Try this:** Select a difficulty → make a valid guess → try an invalid guess → restart → enter a bug description in **AI Debugging Tutor** → review the retrieved reference and proposed verification step. Expand **Reliability dashboard** and click **Run reliability checks** to view the eight predefined scenarios in the app.
 
 ### 🤖 Optional generated explanations
 
@@ -190,7 +190,7 @@ game-glitch-investigator-ai/
 ├── logic_utils.py            # Game logic and state transitions
 ├── ai_tutor.py               # Validation, retrieval, explanation
 ├── knowledge.py              # Five curated bug references
-├── evaluate.py               # Eight-case evaluation harness
+├── evaluate.py               # Eight-case evaluation harness and UI results
 ├── tests/
 │   └── test_ai_tutor.py      # Automated tests
 ├── diagrams/
@@ -237,11 +237,11 @@ RESULT: 8/8 passed
 | Empty description | Reject safely | Pass |
 | Unknown issue | Ask for more context | Pass |
 | Suspicious instruction | Reject safely | Pass |
-| Unit tests | Verify retrieval, guardrails and game logic | Pass: 11/11 |
+| Unit tests | Verify retrieval, guardrails and game logic | Previously 11/11; 12 configured, check current CI |
 
 [**View automated GitHub Actions runs**](https://github.com/harshapriyag123/game-glitch-investigator-ai/actions)
 
-**Scope:** These checks measure known cases, not general Python debugging accuracy. Retrieval scores are heuristic relevance scores, **not calibrated probabilities**. No arbitrary code is executed, and no proposed fix is applied automatically.
+**In-app evaluation:** The Streamlit reliability dashboard runs the same eight deterministic checks and displays per-case results. The current test suite adds a regression test for that integration. The previous 11-test result predates this addition; check the latest CI run for the updated total.\n\n**Scope:** These checks measure known cases, not general Python debugging accuracy. Retrieval scores are heuristic relevance scores, **not calibrated probabilities**. No arbitrary code is executed, and no proposed fix is applied automatically.
 
 ## ⚖️ Responsible AI
 
@@ -276,7 +276,7 @@ Building an AI-assisted system involves more than producing an explanation: the 
 
 ## 📌 Project status
 
-**Source code:** Available publicly on GitHub. **CI:** Automated test workflow configured. **Live hosted app:** Not yet published; no public Streamlit deployment URL is claimed. **License:** No license file is currently specified. **Submission:** Review and personalize the model-card reflection and run the final demo before submitting.
+**Source code:** Available publicly on GitHub. **CI:** Automated test workflow configured (check latest run). **Live hosted app:** Not yet published; no public Streamlit deployment URL is claimed. **License:** No license file is currently specified. **Submission:** Review and personalize the model-card reflection and run the final demo before submitting.
 
 ---
 
@@ -287,3 +287,24 @@ Building an AI-assisted system involves more than producing an explanation: the 
 *From fixing game glitches to understanding why they happen.*
 
 </div>
+
+
+## ✅ CodePath Project 4 submission checklist
+
+| Requirement | Evidence | Status |
+|---|---|---|
+| Extend a Module 1–3 project | Original Module 1 repository linked above | Implemented |
+| New public repository | This repository | Implemented |
+| Integrated AI-related functionality | Curated retrieval in tutor; optional LLM explanations | Implemented; live LLM not verified |
+| Modular Python components | `app.py`, `ai_tutor.py`, `knowledge.py`, `logic_utils.py` | Implemented |
+| Logging and guardrails | Validation, error handling, logger in `ai_tutor.py` | Implemented |
+| Architecture source diagram | `diagrams/architecture.mmd` | Implemented |
+| Reproducible execution evidence | Sample inputs/outputs above and `evaluate.py` | Implemented for deterministic mode |
+| Reliability evaluation | `tests/`, `evaluate.py`, in-app dashboard, CI | Implemented |
+| Responsible AI reflection | `model_card.md` | Draft: student personalization required |
+| 5–7 minute presentation | `PRESENTATION.md` | Outline ready; delivery pending |
+| Optional enhanced RAG/agentic/fine-tuning | No supported evidence | Not claimed |
+| Optional evaluation-script extra credit | `evaluate.py` | Implemented; grading at instructor discretion |
+| Submission | Submit repository URL in CodePath | Student action required |
+
+**Important:** Do not claim a deployed public Streamlit site or successful live LLM run until those are separately verified. A GitHub repository is source-code hosting, not the running application.
