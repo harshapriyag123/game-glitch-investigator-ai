@@ -199,6 +199,7 @@ game-glitch-investigator-ai/
 ├── ai_tutor.py               # Validation, retrieval, explanation
 ├── knowledge.py              # Five curated bug references
 ├── evaluate.py               # Eight-case evaluation harness and UI results
+├── agent_workflow.py         # Bounded, read-only debugging orchestration
 ├── tests/
 │   └── test_ai_tutor.py      # Automated tests
 ├── diagrams/
@@ -222,7 +223,7 @@ python -m pytest -q
 python evaluate.py
 ```
 
-**Previously verified results** (deterministic path):
+**Previously verified results** (deterministic path; subsequent workflow tests added, see current CI):
 
 ```text
 ...........                                                      [100%]
@@ -249,7 +250,7 @@ RESULT: 8/8 passed
 
 [**View automated GitHub Actions runs**](https://github.com/harshapriyag123/game-glitch-investigator-ai/actions)
 
-**In-app evaluation:** The Streamlit reliability dashboard runs the same eight deterministic checks and displays per-case results. The current test suite adds a regression test for that integration. The previous 11-test result predates this addition; check the latest CI run for the updated total.\n\n**Scope:** These checks measure known cases, not general Python debugging accuracy. Retrieval scores are heuristic relevance scores, **not calibrated probabilities**. No arbitrary code is executed, and no proposed fix is applied automatically.
+**Auditable workflow:** The live Streamlit interface includes a read-only Analyze → Retrieve → Plan → Propose → Verify → Report trace implemented in `agent_workflow.py`. The verify step checks that a documented test exists; it does **not** execute the suggested fix or prove the fix works. The workflow has no arbitrary code execution, no automatic patching, and no private reasoning trace. See `ai_interactions.md` for example evidence.\n\n**In-app evaluation:** The Streamlit reliability dashboard runs the same eight deterministic checks and displays per-case results. The current test suite adds a regression test for that integration. The previous 11-test result predates this addition; check the latest CI run for the updated total.\n\n**Scope:** These checks measure known cases, not general Python debugging accuracy. Retrieval scores are heuristic relevance scores, **not calibrated probabilities**. No arbitrary code is executed, and no proposed fix is applied automatically.
 
 ## ⚖️ Responsible AI
 
@@ -311,7 +312,8 @@ Building an AI-assisted system involves more than producing an explanation: the 
 | Reliability evaluation | `tests/`, `evaluate.py`, in-app dashboard, CI | Implemented |
 | Responsible AI reflection | `model_card.md` | Draft: student personalization required |
 | 5–7 minute presentation | `PRESENTATION.md` | Outline ready; delivery pending |
-| Optional enhanced RAG/agentic/fine-tuning | No supported evidence | Not claimed |
+| Bounded debugging workflow | `agent_workflow.py` and in-app trace | Implemented; extra-credit eligibility requires instructor review |
+| Optional enhanced RAG/fine-tuning | No supported evidence | Not claimed |
 | Optional evaluation-script extra credit | `evaluate.py` | Implemented; grading at instructor discretion |
 | Hosted application | [Streamlit Cloud app](https://game-glitch-investigator-ai-5e7ftpz7mef2e9trsrwmta.streamlit.app/) | URL provided; live browser check pending |
 | Submission | Submit repository URL and live app URL in CodePath | Student action required |
