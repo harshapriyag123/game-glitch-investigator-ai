@@ -21,3 +21,9 @@ def test_invalid_does_not_consume_attempts():
 def test_boundaries():
     assert parse_guess('20',1,20)[0]
     assert not parse_guess('21',1,20)[0]
+
+def test_integrated_evaluation():
+    from evaluate import evaluate_cases
+    rows=evaluate_cases()
+    assert len(rows)==8
+    assert all(row["pass"] for row in rows)
