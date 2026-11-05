@@ -18,6 +18,8 @@ jobs:
         run: python -m pytest -q
       - name: Deterministic evaluation
         run: python evaluate.py
+      - name: Capture reproducible end-to-end evidence
+        run: python reproduce_evidence.py
       - name: Verify Streamlit imports
         run: python -c "import streamlit, app, debug_engine, agent_workflow, specialization, evaluate"
       - name: Streamlit headless startup smoke test
