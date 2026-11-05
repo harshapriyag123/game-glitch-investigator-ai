@@ -1,6 +1,7 @@
 import streamlit as st
 from logic_utils import create_game,get_attempt_limit,get_hint,get_range_for_difficulty,submit_guess
 from ai_tutor import explain
+from evaluate import evaluate_cases
 st.set_page_config(page_title="Game Glitch Investigator AI",page_icon="🎮")
 def reset():
     st.session_state.game=create_game(st.session_state.difficulty)
@@ -40,3 +41,14 @@ if st.button("Investigate bug"):
         st.caption(f"Source: {result['source']} | Retrieval score (not probability): {result['confidence']} | Mode: {result['mode']} | Reference verified: {result['verified']}")
         st.info("Human review required: run the suggested test and inspect the code before accepting the fix.")
     else:st.warning(result['answer'])
+
+st.divider()
+with st.expander("🧪 Reliability dashboard — reproducible checks"):
+    st.caption("Runs the same eight deterministic scenarios as python evaluate.py. This does not test live OpenAI output.")
+    if st.button("Run reliability checks"):
+        results=evaluate_cases()
+        passed=sum(item["pass"] for item in results)
+        st.metric("Scenarios passed",f"{passed}/{len(results)}")
+        st.dataframe([{"Case":item["case"],"Result":"PASS" if item["pass"] else "FAIL","Expected":item["expected_status"],"Actual":item["actual_status"],"Source":item["actual_source"] or "—"} for item in results],hide_index=True,use_container_width=True)
+        if passed==len(results): st.success("All predefined retrieval and guardrail scenarios passed.")
+        else: st.error("Some scenarios failed. Inspect the table and evaluation script.")
