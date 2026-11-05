@@ -11,11 +11,19 @@
 [![License](https://img.shields.io/badge/License-Not%20specified-lightgrey)](#project-status)
 [![CodePath](https://img.shields.io/badge/CodePath-AI110%20Final%20Project-7952B3)](#project-background)
 
-[**Quick Start**](#-quick-start) · [**Example Outputs**](#-sample-ui--tutor-output) · [**Architecture**](#-system-architecture) · [**Evaluation**](#-reliability--evaluation) · [**Responsible AI**](#-responsible-ai)
+[**🚀 Live Streamlit App**](https://game-glitch-investigator-ai-5e7ftpz7mef2e9trsrwmta.streamlit.app/) · [**Quick Start**](#-quick-start) · [**Example Outputs**](#-sample-ui--tutor-output) · [**Architecture**](#-system-architecture) · [**Evaluation**](#-reliability--evaluation) · [**Responsible AI**](#-responsible-ai)
 
 </div>
 
 ---
+
+## 🌐 Live application
+
+**[Launch Game Glitch Investigator AI on Streamlit Cloud](https://game-glitch-investigator-ai-5e7ftpz7mef2e9trsrwmta.streamlit.app/)**
+
+This is the deployed application link supplied for the CodePath AI110 final-project deliverable. Reviewers can use it to play the game, investigate sample bugs, and run the in-app reliability checks. If the hosted app is sleeping, allow Streamlit Cloud time to wake it up.
+
+> **Deployment note:** The live URL was supplied by the project owner. Automated browser verification of the running Streamlit interface was unavailable during this update; GitHub CI and local instructions remain independent verification paths.
 
 ## ✨ At a glance
 
@@ -276,7 +284,7 @@ Building an AI-assisted system involves more than producing an explanation: the 
 
 ## 📌 Project status
 
-**Source code:** Available publicly on GitHub. **CI:** Automated test workflow configured (check latest run). **Live hosted app:** Not yet published; no public Streamlit deployment URL is claimed. **License:** No license file is currently specified. **Submission:** Review and personalize the model-card reflection and run the final demo before submitting.
+**Source code:** Available publicly on GitHub. **CI:** Automated test workflow configured (check latest run). **Live hosted app:** [Streamlit Community Cloud](https://game-glitch-investigator-ai-5e7ftpz7mef2e9trsrwmta.streamlit.app/) (URL supplied by project owner; live browser check unavailable). **License:** No license file is currently specified. **Submission:** Review and personalize the model-card reflection and run the final demo before submitting.
 
 ---
 
@@ -305,6 +313,7 @@ Building an AI-assisted system involves more than producing an explanation: the 
 | 5–7 minute presentation | `PRESENTATION.md` | Outline ready; delivery pending |
 | Optional enhanced RAG/agentic/fine-tuning | No supported evidence | Not claimed |
 | Optional evaluation-script extra credit | `evaluate.py` | Implemented; grading at instructor discretion |
-| Submission | Submit repository URL in CodePath | Student action required |
+| Hosted application | [Streamlit Cloud app](https://game-glitch-investigator-ai-5e7ftpz7mef2e9trsrwmta.streamlit.app/) | URL provided; live browser check pending |
+| Submission | Submit repository URL and live app URL in CodePath | Student action required |
 
 **Important:** Do not claim a deployed public Streamlit site or successful live LLM run until those are separately verified. A GitHub repository is source-code hosting, not the running application.
