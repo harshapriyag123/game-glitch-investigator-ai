@@ -10,13 +10,21 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install
+      - name: Install project dependencies
         run: python -m pip install -r requirements.txt
-      - name: Compile all Python files
-        run: python -m compileall -q .
+      - name: Compile source
+        run: python -m compileall -q app.py ai_tutor.py agent_workflow.py debug_engine.py evaluate.py knowledge.py knowledge_docs.py logic_utils.py retrieval_enhanced.py specialization.py verification_tools.py
       - name: Unit tests
         run: python -m pytest -q
       - name: Deterministic evaluation
         run: python evaluate.py
-      - name: Verify Streamlit dependency and imports
-        run: python -c "import streamlit, debug_engine, agent_workflow, specialization, evaluation_dummy" || python -c "import streamlit, debug_engine, agent_workflow, specialization, evaluate"
+      - name: Verify Streamlit imports
+        run: python -c "import streamlit, app, debug_engine, agent_workflow, specialization, evaluate"
+      - name: Streamlit headless startup smoke test
+        run: |
+          python - <<'PY'
+          from streamlit.testing.v1 import AppTest
+          app = AppTest.from_file("app.py", default_timeout=30).run()
+          assert not app.exception, "\n".join(str(x.message) for x in app.exception)
+          print("Streamlit AppTest: startup passed")
+          PY
