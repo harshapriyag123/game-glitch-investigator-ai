@@ -2,6 +2,7 @@ import streamlit as st
 from logic_utils import create_game,get_attempt_limit,get_hint,get_range_for_difficulty,submit_guess
 from ai_tutor import explain
 from evaluate import evaluate_cases
+from agent_workflow import investigate
 st.set_page_config(page_title="Game Glitch Investigator AI",page_icon="🎮")
 def reset():
     st.session_state.game=create_game(st.session_state.difficulty)
@@ -52,3 +53,19 @@ with st.expander("🧪 Reliability dashboard — reproducible checks"):
         st.dataframe([{"Case":item["case"],"Result":"PASS" if item["pass"] else "FAIL","Expected":item["expected_status"],"Actual":item["actual_status"],"Source":item["actual_source"] or "—"} for item in results],hide_index=True,use_container_width=True)
         if passed==len(results): st.success("All predefined retrieval and guardrail scenarios passed.")
         else: st.error("Some scenarios failed. Inspect the table and evaluation script.")
+
+st.divider()
+st.header("🔍 Auditable Debugging Workflow")
+st.caption("Read-only orchestration: analyze → retrieve → plan → propose → verify reference → report. It does not run patches or execute arbitrary code.")
+workflow_query=st.text_area("Bug report for workflow",key="workflow_query",placeholder="The secret changes after every guess")
+if st.button("Run debugging workflow"):
+    report=investigate(workflow_query)
+    st.session_state.workflow_report=report
+if "workflow_report" in st.session_state:
+    report=st.session_state.workflow_report
+    st.write(f"**Status:** {report['status']}")
+    for step in report["trace"]:
+        with st.expander(f"{step['step'].title()} — {step['status']}"):
+            st.write(step["detail"])
+    st.info(f"**Suggested verification:** {report['verification']}")
+    st.warning(report["approval"])
