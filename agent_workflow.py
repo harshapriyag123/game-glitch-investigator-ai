@@ -1,36 +1,30 @@
-"""Bounded, auditable debugging workflow. No arbitrary code execution."""
-from ai_tutor import explain
+"""Bounded debugging orchestrator: real retrieval and allowlisted verification."""
+from debug_engine import explain_enhanced
 from knowledge import BUGS
-
-REFERENCE_BY_ID={item["id"]:item for item in BUGS}
-
-def investigate(query, use_llm=False):
-    """Analyze -> retrieve -> plan -> propose -> verify reference -> report.
-
-    Verification checks the *reference and proposed test's availability*,
-    not whether a suggested code fix works. All actions are read-only.
-    """
-    trace=[]
-    trace.append({"step":"analyze","status":"done","detail":"Input received for validation; no code execution."})
-    result=explain(query,use_llm=use_llm)
+from verification_tools import verify_existing_game
+REFERENCE_BY_ID={b["id"]:b for b in BUGS}
+MAX_STEPS=6
+def investigate(query,use_llm=False):
+    """Never executes arbitrary user code, patches files, or exposes hidden model reasoning."""
+    trace=[{"step":"analyze","status":"done","detail":"Input sent to length and instruction validation."}]
+    result=explain_enhanced(query,use_llm=use_llm)
     if result["status"]!="ok":
         trace.append({"step":"retrieve","status":result["status"],"detail":result["answer"]})
         return {"status":result["status"],"trace":trace,"result":result,
-                "verification":"Not run: no accepted reference.","approval":"Human review required"}
-    source=result["source"]
-    trace.append({"step":"retrieve","status":"done","detail":f"Matched curated reference {source}."})
-    reference=REFERENCE_BY_ID.get(source)
-    if reference is None:
-        trace.append({"step":"verify","status":"failed","detail":"Source missing from allowlisted knowledge."})
-        return {"status":"failed","trace":trace,"result":result,
-                "verification":"Failed: unknown source.","approval":"Human review required"}
-    trace.append({"step":"plan","status":"done","detail":"Use the curated root cause and proposed fix."})
-    trace.append({"step":"propose","status":"done","detail":reference["fix"]})
-    valid_test=bool(reference.get("test","").strip())
-    trace.append({"step":"verify","status":"done" if valid_test else "failed",
-                  "detail":"Reference and test instructions are present; fix has NOT been executed."
-                  if valid_test else "No verification test documented."})
-    trace.append({"step":"report","status":"done","detail":"Advisory report prepared for human review."})
-    return {"status":"ready_for_review" if valid_test else "failed",
-            "trace":trace,"result":result,"verification":reference.get("test",""),
-            "approval":"Human review required; no patch applied"}
+                "verification":"Not run: no accepted reference.","verification_run":None,
+                "approval":"Human review required"}
+    bug=REFERENCE_BY_ID.get(result["source"])
+    trace.append({"step":"retrieve","status":"done",
+                  "detail":"Retrieved "+", ".join(d["id"] for d in result["documents"])})
+    if bug is None:
+        return {"status":"failed","trace":trace,"result":result,"verification":"Unknown issue",
+                "verification_run":None,"approval":"Human review required"}
+    trace.append({"step":"plan","status":"done","detail":"Select allowlisted check for "+bug["id"]})
+    trace.append({"step":"propose","status":"done","detail":bug["fix"]})
+    verification=verify_existing_game(bug["id"])
+    trace.append({"step":"verify","status":verification["status"],"detail":verification["detail"]})
+    trace.append({"step":"report","status":"done","detail":"Report returned; no patch applied."})
+    assert len(trace)<=MAX_STEPS
+    return {"status":"ready_for_review" if verification["passed"] else "verification_failed",
+            "trace":trace,"result":result,"verification":bug["test"],
+            "verification_run":verification,"approval":"Human review required; no patch applied"}
