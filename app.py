@@ -52,13 +52,20 @@ with tabs[0]:
     elif current["last_outcome"]:st.info(get_hint(current["last_outcome"]))
     if current["history"]:
         st.caption("Previous valid guesses: "+", ".join(map(str,current["history"])))
+def select_example():
+    selected=st.session_state.get("example_report","Custom report")
+    st.session_state["bug_report"]="" if selected=="Custom report" else selected
+
 with tabs[1]:
     st.subheader("Retrieval-grounded debugging tutor")
     st.write("Investigate a known game bug with source-backed evidence. The tutor proposes fixes but never applies them.")
-    example=st.selectbox("Example reports",["Custom report","The secret resets on every Streamlit rerun","Easy mode accepts 99 and uses the wrong range","Blank or abc input consumes an attempt","New Game does not clear my score"])
-    prompt=st.text_area("Describe the symptom",value="" if example=="Custom report" else example,key="bug_report",height=110)
+    example=st.selectbox("Example reports",["Custom report","The secret resets on every Streamlit rerun","Easy mode accepts 99 and uses the wrong range","Blank or abc input consumes an attempt","New Game does not clear my score"],key="example_report",on_change=select_example)
+    prompt=st.text_area("Describe the symptom",key="bug_report",height=110,placeholder="Describe what happened and what you expected instead.")
     use_llm=st.checkbox("Use optional OpenAI explanation (requires server API key)",key="bug_llm")
     if st.button("Investigate bug",type="primary",key="investigate_bug"):
+        # Clear stale report and show the result of the current investigation only.
+        st.session_state.pop("tutor_report",None)
+        st.session_state.pop("specialist_report",None)
         st.session_state["tutor_report"]=explain_enhanced(prompt,use_llm=use_llm)
         st.session_state["specialist_report"]=specialized_report(prompt)
     if "tutor_report" in st.session_state:
