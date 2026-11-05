@@ -85,7 +85,7 @@ python -m pytest -q
 python evaluate.py
 ```
 
-The following abbreviated extracts were recorded in [GitHub Actions run 41945106493](https://github.com/harshapriyag123/game-glitch-investigator-ai/actions/runs/41945106493) on November 5, 2026. Full supporting excerpts and steps are produced by `python reproduce_evidence.py`.
+The following abbreviated extracts were recorded in [GitHub Actions run 41945465729](https://github.com/harshapriyag123/game-glitch-investigator-ai/actions/runs/41945465729) on November 5, 2026. Full supporting excerpts and steps are produced by `python reproduce_evidence.py`.
 
 ### Example 1 — Streamlit secret resets
 
@@ -153,10 +153,10 @@ All three examples exercise the **same integrated workflow** used by the Streaml
 
 ## Evaluation and measured comparisons
 
-**Verified GitHub Actions run:** [41945106493](https://github.com/harshapriyag123/game-glitch-investigator-ai/actions/runs/41945106493).
+**Verified GitHub Actions run:** [41945465729](https://github.com/harshapriyag123/game-glitch-investigator-ai/actions/runs/41945465729).
 
 ```text
-28 passed in 1.02s
+30 passed in 1.46s
 RESULT: 21/21 passed (deterministic; no live model evaluated)
 RETRIEVAL: 5/5 known inputs gained supporting documents
 SPECIALIZATION: 30/30 structured field slots vs 0/30
@@ -240,3 +240,6 @@ See [model_card.md](model_card.md) for limitations, biases, misuse prevention, r
 ---
 
 <div align="center">Made with Python · Streamlit · BM25 retrieval · pytest · GitHub Actions</div>
+
+
+For full rubric evidence and outstanding actions see [Grading Readiness Report](GRADING_REPORT.md).
