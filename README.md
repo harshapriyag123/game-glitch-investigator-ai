@@ -145,24 +145,25 @@ The editable diagram is committed at [`diagrams/architecture.mmd`](diagrams/arch
 
 ```mermaid
 flowchart TD
-    A["👩‍💻 Student"] --> B["🎮 Streamlit UI"]
-    B --> C["Game engine"]
-    B --> D["🛡️ Input validator"]
-    D -->|Accepted| E["🔎 Issue retriever"]
-    D -->|Rejected| F["Safe error response"]
-    E --> G{"Relevant match?"}
-    G -->|No| H["Ask for context"]
-    G -->|Yes| I["📚 Curated bug knowledge"]
-    I --> J{"Optional LLM enabled?"}
-    J -->|No| K["Grounded template"]
-    J -->|Yes| L["🤖 OpenAI explanation"]
-    L -->|Failure| K
-    K --> M["Cause · Fix · Test"]
-    L --> M
-    M --> N["👀 Human verification"]
-    O["🧪 pytest + evaluation"] --> C
-    O --> E
-    O --> D
+  U["Student"] --> ST["Streamlit interface"]
+  ST --> GA["Game Arena: isolated stateful game logic"]
+  ST --> VAL["Input validation & injection guardrails"]
+  VAL -->|accepted| CL["Five-category issue classification"]
+  VAL -->|rejected| REJ["Safe rejection / request clarification"]
+  CL --> BM["BM25 document retriever"]
+  DOC["Curated knowledge + multiple documentation sources"] --> BM
+  BM --> OUT["Evidence-grounded response"]
+  OUT --> OPT{"OpenAI model configured?"}
+  OPT -->|no| TMP["Deterministic template"]
+  OPT -->|yes| LLM["Optional LLM with evidence"]
+  LLM -->|failure| TMP
+  TMP --> AG["Bounded debugging workflow"]
+  LLM --> AG
+  AG --> PLAN["Select approved fix & verification check"]
+  PLAN --> TEST["Allowlisted test of current game invariants"]
+  TEST --> HUMAN["Human review; no automatic patch"]
+  ST --> EV["Unit tests & evaluation dashboard"]
+  EV --> HUMAN
 ```
 
 ### 📁 Repository structure
@@ -249,7 +250,7 @@ Read [`model_card.md`](model_card.md) for the full responsible-AI reflection, in
 
 ## 🎓 Project background
 
-Built as an extension of the completed [**CodePath AI110 Module 1 — Game Glitch Investigator**](https://github.com/harshapriyag123/ai110-module1show-gameglitchinvestigator-starter). The original game fixed higher/lower hints, numeric input handling, inclusive difficulty ranges, scoring, and session-state reset. This final project adds retrieval-grounded explanations, evaluation, guardrails, architecture documentation, and optional generative AI.
+The original [**CodePath AI110 Module 1 — Game Glitch Investigator**](https://github.com/harshapriyag123/ai110-module1show-gameglitchinvestigator-starter) was a Streamlit number-guessing game with Easy, Normal, and Hard levels. It provided higher/lower hints, validated inclusive number ranges, tracked guesses and score, and reset game state correctly between rounds. This final-project extension adds document-backed retrieval, auditable debugging workflows, constrained specialist output, evaluation, and optional language-model explanations.
 
 **Design trade-off:** A small transparent knowledge base is easy to audit and test, but it cannot diagnose arbitrary code. The default mode avoids model cost, while optional generation provides more flexible wording at the cost of additional uncertainty. The BM25 retriever is category-filtered: incorrect first-stage classification can lead to irrelevant evidence. Only familiar cases have been evaluated.
 
