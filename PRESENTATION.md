@@ -34,7 +34,7 @@ Open **Agent Workflow** and demonstrate the six recorded steps and the allowlist
 Open **Evaluation** and run the dashboard. Show the latest successful GitHub Actions output:
 
 ```text
-26 passed in 0.34s
+30 passed in 1.46s
 RESULT: 21/21 passed (deterministic; no live model evaluated)
 RETRIEVAL: 5/5 known inputs gained supporting documents
 SPECIALIZATION: 30/30 required structured fields vs 0/30 baseline
