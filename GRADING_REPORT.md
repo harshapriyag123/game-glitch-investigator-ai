@@ -37,17 +37,17 @@ This report is an audit of the *uploaded Week 9 assignment instructions* and act
 
 ## Verified technical evidence
 
-From [successful GitHub Actions run 41945106493](https://github.com/harshapriyag123/game-glitch-investigator-ai/actions/runs/41945106493):
+From [successful GitHub Actions run 41945465729](https://github.com/harshapriyag123/game-glitch-investigator-ai/actions/runs/41945465729):
 
 ```text
-28 passed in 1.02s
+30 passed in 1.46s
 RESULT: 21/21 passed (deterministic; no live model evaluated)
 RETRIEVAL: 5/5 known inputs gained supporting documents
 SPECIALIZATION: 30/30 structured field slots vs 0/30 baseline schema slots; measures format only
 Streamlit AppTest: startup passed
 ```
 
-The tests exercise known issue retrieval, empty/unknown/injection inputs, missing API key, mocked API outage, difficulty boundaries, safe allowlisted verification and Streamlit UI interactions. The numbers above are tied to that exact CI run; for subsequent commits, check [Actions](https://github.com/harshapriyag123/game-glitch-investigator-ai/actions).
+The latest referenced CI run also validates and uploads a machine-readable `codepath-ai110-evidence` JSON artifact. The tests exercise known issue retrieval, empty/unknown/injection inputs, missing API key, mocked API outage, difficulty boundaries, safe allowlisted verification and Streamlit UI interactions. The numbers above are tied to that exact CI run; for subsequent commits, check [Actions](https://github.com/harshapriyag123/game-glitch-investigator-ai/actions).
 
 To reproduce:
 
