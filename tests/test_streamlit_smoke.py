@@ -1,4 +1,5 @@
 from streamlit.testing.v1 import AppTest
+from pathlib import Path
 
 def test_streamlit_starts_without_api_key(monkeypatch):
     monkeypatch.delenv("OPENAI_API_KEY",raising=False)
