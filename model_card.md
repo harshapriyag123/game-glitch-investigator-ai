@@ -35,7 +35,7 @@ These mitigations reduce—but do not eliminate—the possibility of inappropria
 - Retrieval evidence: **5/5 known issue examples gained supporting documents**.
 - Structured specialization: **30/30 populated required field slots versus 0/30 in the free-form baseline**. **This measures output structure, not correctness.**
 
-See the latest GitHub Actions run for the outcome after subsequent changes. A surprising boundary is that the system can safely decline unknown or suspicious input instead of inventing a diagnosis. Conversely, a clean structured response can still be wrong if the input is misclassified, and a passing invariant check does not validate a proposed patch.
+The workflow also generated valid JSON execution evidence as a downloadable `codepath-ai110-evidence` artifact. See the latest GitHub Actions run for the outcome after subsequent changes. A surprising boundary is that the system can safely decline unknown or suspicious input instead of inventing a diagnosis. Conversely, a clean structured response can still be wrong if the input is misclassified, and a passing invariant check does not validate a proposed patch.
 
 These are predefined examples. There is no held-out human-annotated bug corpus, and no quantified generalization or live-LLM accuracy claim.
 
