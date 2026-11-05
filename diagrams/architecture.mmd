@@ -1,0 +1,19 @@
+flowchart TD
+    A[Student] --> B[Streamlit UI]
+    B --> C[Game engine]
+    B --> D[Bug description validator]
+    D -->|accepted| E[Keyword retriever]
+    D -->|rejected| F[Safe error message]
+    E --> G{Relevant match?}
+    G -->|no| H[Ask for more context]
+    G -->|yes| I[Curated bug knowledge]
+    I --> J{Optional API key and opt-in?}
+    J -->|no| K[Grounded template explanation]
+    J -->|yes| L[LLM explanation]
+    L -->|error| K
+    K --> M[Explanation and suggested test]
+    L --> M
+    M --> N[Human verification]
+    O[pytest and evaluation harness] --> C
+    O --> E
+    O --> D
