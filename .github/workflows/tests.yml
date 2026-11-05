@@ -20,6 +20,15 @@ jobs:
         run: python evaluate.py
       - name: Capture reproducible end-to-end evidence
         run: python reproduce_evidence.py
+      - name: Generate machine-readable execution evidence
+        run: |
+          python demo_evidence.py > demo_evidence.json
+          python -m json.tool demo_evidence.json > /dev/null
+      - name: Upload execution evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: codepath-ai110-evidence
+          path: demo_evidence.json
       - name: Verify Streamlit imports
         run: python -c "import streamlit, debug_engine, agent_workflow, specialization, evaluate"
       - name: Streamlit headless startup smoke test
