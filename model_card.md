@@ -29,8 +29,8 @@ These mitigations reduce—but do not eliminate—the possibility of inappropria
 
 ## 5. Reliability testing: reproducible results and surprises
 
-**Verified in GitHub Actions on November 5, 2026, at commit `95f583fb`:**
-- `python -m pytest -q`: **25 tests passed**.
+**Verified in GitHub Actions on November 5, 2026, at commit `e562730` (run [41944953019](https://github.com/harshapriyag123/game-glitch-investigator-ai/actions/runs/41944953019)):**
+- `python -m pytest -q`: **26 tests passed**.
 - `python evaluate.py`: **21/21 deterministic scenarios passed**.
 - Retrieval evidence: **5/5 known issue examples gained supporting documents**.
 - Structured specialization: **30/30 populated required field slots versus 0/30 in the free-form baseline**. **This measures output structure, not correctness.**
