@@ -1,19 +1,20 @@
 flowchart TD
-    A[Student] --> B[Streamlit UI]
-    B --> C[Game engine]
-    B --> D[Bug description validator]
-    D -->|accepted| E[Keyword retriever]
-    D -->|rejected| F[Safe error message]
-    E --> G{Relevant match?}
-    G -->|no| H[Ask for more context]
-    G -->|yes| I[Curated bug knowledge]
-    I --> J{Optional API key and opt-in?}
-    J -->|no| K[Grounded template explanation]
-    J -->|yes| L[LLM explanation]
-    L -->|error| K
-    K --> M[Explanation and suggested test]
-    L --> M
-    M --> N[Human verification]
-    O[pytest and evaluation harness] --> C
-    O --> E
-    O --> D
+  U["Student"] --> ST["Streamlit interface"]
+  ST --> GA["Game Arena: isolated stateful game logic"]
+  ST --> VAL["Input validation & injection guardrails"]
+  VAL -->|accepted| CL["Five-category issue classification"]
+  VAL -->|rejected| REJ["Safe rejection / request clarification"]
+  CL --> BM["BM25 document retriever"]
+  DOC["Curated knowledge + multiple documentation sources"] --> BM
+  BM --> OUT["Evidence-grounded response"]
+  OUT --> OPT{"OpenAI model configured?"}
+  OPT -->|no| TMP["Deterministic template"]
+  OPT -->|yes| LLM["Optional LLM with evidence"]
+  LLM -->|failure| TMP
+  TMP --> AG["Bounded debugging workflow"]
+  LLM --> AG
+  AG --> PLAN["Select approved fix & verification check"]
+  PLAN --> TEST["Allowlisted test of current game invariants"]
+  TEST --> HUMAN["Human review; no automatic patch"]
+  ST --> EV["Unit tests & evaluation dashboard"]
+  EV --> HUMAN

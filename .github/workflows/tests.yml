@@ -1,4 +1,4 @@
-name: Python tests
+name: Python tests and evaluation
 on:
   push:
   pull_request:
@@ -10,6 +10,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: python -m pip install -r requirements.txt
-      - run: python -m pytest -q
-      - run: python evaluate.py
+      - name: Install
+        run: python -m pip install -r requirements.txt
+      - name: Compile all Python files
+        run: python -m compileall -q .
+      - name: Unit tests
+        run: python -m pytest -q
+      - name: Deterministic evaluation
+        run: python evaluate.py
+      - name: Verify Streamlit dependency and imports
+        run: python -c "import streamlit, debug_engine, agent_workflow, specialization, evaluation_dummy" || python -c "import streamlit, debug_engine, agent_workflow, specialization, evaluate"
