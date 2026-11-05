@@ -17,6 +17,14 @@
 
 ---
 
+## 🚀 Final Project Output — Live Streamlit Application
+
+**Application URL:** https://game-glitch-investigator-ai-5e7ftpz7mef2e9trsrwmta.streamlit.app/
+
+**Source code:** https://github.com/harshapriyag123/game-glitch-investigator-ai
+
+**Submission note:** This is the user-provided deployed output for CodePath AI110 Module 5 Project 4. Include both URLs in the final submission. The app is expected to update when Streamlit Community Cloud deploys the connected main branch; confirm its latest version in the browser before submitting.
+
 ## 🌐 Live application
 
 **[Launch Game Glitch Investigator AI on Streamlit Cloud](https://game-glitch-investigator-ai-5e7ftpz7mef2e9trsrwmta.streamlit.app/)**
