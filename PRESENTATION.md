@@ -41,7 +41,7 @@ SPECIALIZATION: 30/30 required structured fields vs 0/30 baseline
 Streamlit AppTest: startup passed
 ```
 
-These figures came from [GitHub Actions run 41944953019](https://github.com/harshapriyag123/game-glitch-investigator-ai/actions/runs/41944953019). Re-check current CI results after making further edits.
+These figures came from [GitHub Actions run 41945106493](https://github.com/harshapriyag123/game-glitch-investigator-ai/actions/runs/41945106493). Re-check current CI results after making further edits.
 
 Demonstrate a rejected prompt:
 
